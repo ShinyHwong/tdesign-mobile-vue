@@ -1,6 +1,7 @@
 :: BASE_DOC ::
 
 ## API
+
 ### Upload Props
 
 名称 | 类型 | 默认值 | 说明 | 必传
@@ -13,11 +14,11 @@ autoUpload | Boolean | true | 是否在选择文件后自动发起请求上传�
 beforeUpload | Function | - | 如果是自动上传模式 `autoUpload=true`，表示单个文件上传之前的钩子函数，若函数返回值为 `false` 则表示不上传当前文件。<br/>如果是非自动上传模式 `autoUpload=false`，函数返回值为 `false` 时表示从上传文件中剔除当前文件。TS 类型：`(file: UploadFile) => boolean \| Promise<boolean>` | N
 data | Object | - | 上传请求所需的额外字段，默认字段有 `file`，表示文件信息。可以添加额外的文件名字段，如：`{file_name: "custom-file-name.txt"}`。`autoUpload=true` 时有效。也可以使用 `formatRequest` 完全自定义上传请求的字段。TS 类型：`Record<string, any> \| ((files: UploadFile[]) => Record<string, any>)` | N
 disabled | Boolean | - | 是否禁用 | N
-fileListDisplay | Slot / Function | - | 【开发中】用于完全自定义文件列表界面内容(UI)，单文件和多文件均有效。TS 类型：`TNode<{ files: UploadFile[]; dragEvents?: UploadDisplayDragEvents }>`。[通用类型定义](https://github.com/Tencent/tdesign-mobile-vue/blob/develop/src/common.ts) | N
+fileListDisplay | Slot / Function | - | 用于完全自定义文件列表界面内容(UI)，单文件和多文件均有效。TS 类型：`TNode<{ files: UploadFile[]; dragEvents?: UploadDisplayDragEvents }>`。[通用类型定义](https://github.com/Tencent/tdesign-mobile-vue/blob/develop/src/common.ts) | N
 files | Array | [] | 已上传文件列表，同 `value`。TS 类型：`UploadFile`。支持语法糖 `v-model:files`。TS 类型：`Array<T>` | N
 defaultFiles | Array | [] | 已上传文件列表，同 `value`。TS 类型：`UploadFile`。非受控属性。TS 类型：`Array<T>` | N
 format | Function | - | 转换文件 `UploadFile` 的数据结构，可新增或修改 `UploadFile` 的属性，注意不能删除 `UploadFile` 属性。`action` 存在时有效。TS 类型：`(file: File) => UploadFile` | N
-formatRequest | Function | - | 用于新增或修改文件上传请求参数。`action` 存在时有效。一个请求上传一个文件时，默认请求字段有 `file`；<br/>一个请求上传多个文件时，默认字段有 `file[0]/file[1]/file[2]/.../length`，其中 `length` 表示本次上传的文件数量。<br/>⚠️非常注意，此处的 `file[0]/file[1]` 仅仅是一个字段名，并非表示 `file` 是一个数组，接口获取字段时注意区分。<br/>可以使用 `name` 定义 `file` 字段的别名，也可以使用 `formatRequest` 自定义任意字段。TS 类型：`(requestData: { [key: string]: any }) => { [key: string]: any }` | N
+formatRequest | Function | - | 用于新增或修改文件上传请求 参数。`action` 存在时有效。一个请求上传一个文件时，默认请求字段有 `file`。<br/>一个请求上传多个文件时，默认字段有 `file[0]/file[1]/file[2]/.../length`，其中 `length` 表示本次上传的文件数量。<br/>⚠️非常注意，此处的 `file[0]/file[1]` 仅仅是一个字段名，并非表示 `file` 是一个数组，接口获取字段时注意区分。<br/>可以使用 `name` 定义 `file` 字段的别名。<br/>也可以使用 `formatRequest` 自定义任意字段，如添加一个字段 `fileList` ，存储文件数组。TS 类型：`(requestData: { [key: string]: any }) => { [key: string]: any }` | N
 formatResponse | Function | - | 用于格式化文件上传后的接口响应数据，`response` 便是接口响应的原始数据。`action` 存在时有效。<br/> 此函数的返回值 `error` 或 `response.error` 会作为错误文本提醒，如果存在会判定为本次上传失败。<br/> 此函数的返回值 `url` 或 `response.url` 会作为上传成功后的链接。TS 类型：`(response: any, context: FormatResponseContext) => ResponseType ` `type ResponseType = { error?: string; url?: string } & Record<string, any>` `interface FormatResponseContext { file: UploadFile; currentFiles?: UploadFile[] }`。[详细类型定义](https://github.com/Tencent/tdesign-mobile-vue/tree/develop/src/upload/type.ts) | N
 headers | Object | - | 设置上传的请求头部，`action` 存在时有效。TS 类型：`{[key: string]: string}` | N
 imageProps | Object | - | 透传 Image 组件全部属性。TS 类型：`ImageProps`，[Image API Documents](./image?tab=api)。[详细类型定义](https://github.com/Tencent/tdesign-mobile-vue/tree/develop/src/upload/type.ts) | N
@@ -67,17 +68,3 @@ type | String | - | 文件类型 | N
 uploadTime | String | - | 上传时间 | N
 url | String | - | 文件上传成功后的下载/访问地址 | N
 `PlainObject` | \- | - | `PlainObject` 不是 UploadFile 中的属性，而表示 UploadFile 本身支持添加任意属性，`type PlainObject = {[key: string]: any}`' | N
-
-
-### CSS 变量
-组件提供了下列 CSS 变量，可用于自定义样式。
-名称 | 默认值 | 描述 
--- | -- | --
---td-upload-add-color | @font-gray-3 | - 
---td-upload-add-icon-font-size | 28px | - 
---td-upload-background | @upload-add-bg-color | - 
---td-upload-delete-icon-color | @font-white-1 | - 
---td-upload-grid-columns | 4 | - 
---td-upload-height | 80px | - 
---td-upload-radius | @radius-default | - 
---td-upload-width | 80px | - 
