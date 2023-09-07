@@ -1,6 +1,7 @@
 :: BASE_DOC ::
 
 ## API
+
 ### Upload Props
 
 name | type | default | description | required
@@ -67,17 +68,3 @@ type | String | - | \- | N
 uploadTime | String | - | upload time | N
 url | String | - | \- | N
 `PlainObject` | \- | - | `PlainObject` is not an attribute of UploadFile，it means you can add and attributes to UploadFile, `type PlainObject = {[key: string]: any}`' | N
-
-
-### CSS Variables
-The component provides the following CSS variables, which can be used to customize styles.
-Name | Default Value | Description 
--- | -- | --
---td-upload-add-color | @font-gray-3 | - 
---td-upload-add-icon-font-size | 28px | - 
---td-upload-background | @upload-add-bg-color | - 
---td-upload-delete-icon-color | @font-white-1 | - 
---td-upload-grid-columns | 4 | - 
---td-upload-height | 80px | - 
---td-upload-radius | @radius-default | - 
---td-upload-width | 80px | - 
